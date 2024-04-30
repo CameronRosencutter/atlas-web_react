@@ -1,6 +1,4 @@
-// Import jQuery
 import $ from 'jquery';
-// Import Lodash debounce function
 import debounce from 'lodash/debounce';
 
 // Function to add elements to the page body
