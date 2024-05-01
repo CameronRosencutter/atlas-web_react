@@ -1,36 +1,40 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
 
 module.exports = {
-  mode: 'production', // Set webpack mode to production
-  entry: './src/index.js', // Entry point of your application
+  mode: "production",
+  entry: './js/dashboard_main',
+  performance: {
+    maxAssetSize: 1000000,
+  },
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public'),
+    filename: "bundle.js",
+    path: path.resolve(__dirname, "public"),
   },
   module: {
     rules: [
-      // Configuration for processing CSS files
       {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        // add css-loader ========
+        test: /\.css$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+        ]
       },
-      // Configuration for processing images
       {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        type: 'asset/resource',
+        // add the file-loader =======
+        test: /\.(gif|png|jpg|jpe?g|svg)$/i,
+        use: [
+          "file-loader",
+          {
+            // add image-webpack-loader =====0
+            loader: "image-webpack-loader",
+            options: {
+              bypassOnDebug: true, // webpack@1.x
+              disable: true, // webpack@2.x and newer
+            },
+          },
+        ],
       },
     ],
   },
-  plugins: [
-    // HTML Webpack Plugin for generating HTML file
-    new HtmlWebpackPlugin({
-      template: './public/index.html', // Path to your HTML template
-    }),
-    // Mini CSS Extract Plugin for extracting CSS into separate files
-    new MiniCssExtractPlugin({
-      filename: 'styles.css',
-    }),
-  ],
 };
