@@ -1,6 +1,5 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // Import HtmlWebpackPlugin
 
 module.exports = {
   mode: 'production',
@@ -23,8 +22,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
-      inject: false,
+      template: './public/index.html', // Specify the path to your HTML template
+      inject: false, // Optional: Specify if the script tags should be injected into the HTML file
     }),
     new MiniCssExtractPlugin({
       filename: './css/main.css',
