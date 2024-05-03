@@ -1,23 +1,28 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  mode: "production",
-  entry: './js/dashboard_main',
-  performance: {
-    maxAssetSize: 1000000,
+  mode: "development",
+  entry: {
+    header: "./src/header.js",
+    body: "./src/body.js",
+    footer: "./src/footer.js",
   },
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "public"),
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
+  },
+  devServer: {
+    port: 8564,
+    contentBase: path.join(__dirname, "dist"),
+    open: true,
   },
   module: {
     rules: [
       {
         test: /\.css$/i,
-        use: [
-          'style-loader',
-          'css-loader',
-        ]
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(gif|png|jpg|jpe?g|svg)$/i,
@@ -26,12 +31,19 @@ module.exports = {
           {
             loader: "image-webpack-loader",
             options: {
-              bypassOnDebug: true, 
-              disable: true, 
+              bypassOnDebug: true,
+              disable: true,
             },
           },
         ],
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./src/index.html",
+    }),
+    new CleanWebpackPlugin(),
+  ],
+  devtool: "inline-source-map",
 };
