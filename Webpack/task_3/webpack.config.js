@@ -8,19 +8,23 @@ module.exports = {
     header: './modules/header/header.js',
     body: './modules/body/body.js',
     footer: './modules/footer/footer.js',
-},
+  },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'public'),
+    publicPath: '/',
   },
-  devtool: 'inline-source-map', // Set devtool to inline-source-map
+  devtool: 'inline-source-map',
   optimization: {
     splitChunks: {
-      chunks: 'all', // Set chunks to 'all'
+      chunks: 'all',
     },
   },
   devServer: {
-    contentBase: './public',
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
+    open: true,
     port: 8564,
   },
   module: {
@@ -45,7 +49,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './public/index.html',
     }),
     new CleanWebpackPlugin(),
   ],
