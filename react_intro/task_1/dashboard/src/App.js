@@ -1,9 +1,13 @@
+import React from 'react';
 import logo from './HL.ico';
 import './App.css';
+import { getFullYear, getFooterCopy } from './utils.js';
+import Notifications from './Notifications'; // Import the Notifications component
 
 function App() {
   return (
     <div className="App">
+      <Notifications /> {/* Render Notifications component here */}
       <header className="App-header">
         <div className="header">
           <img src={logo} alt="" />
@@ -16,7 +20,7 @@ function App() {
         </div>
       </header>
       <footer>
-        <p>Copyright 2019 - Holberton School</p>
+        <p>{getFullYear()} - {getFooterCopy(false)}</p>
       </footer>
     </div>
   );
