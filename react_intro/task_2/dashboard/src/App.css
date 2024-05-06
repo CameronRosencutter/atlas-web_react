@@ -33,3 +33,16 @@ form {
 .passwordbox {
   margin-right: 20px;
 }
+
+.notifications {
+  padding: 30px;
+  outline: rgb(255, 0, 0) solid 5px;
+}
+
+li[data-priority="default"] {
+  color: blue;
+}
+
+li[data-priority="urgent"] {
+  color: red;
+}

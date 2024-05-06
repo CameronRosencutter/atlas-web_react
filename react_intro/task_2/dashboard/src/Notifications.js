@@ -15,7 +15,7 @@ const Notifications = () => {
       >
         x
       </button>
-      <p>{getLatestNotification()}</p>
+      <p>Here is the list of requirements</p>
       <ul>
         <li data-priority="default">New course available</li>
         <li data-priority="urgent" style={{ color: 'red' }}>New resume available</li>
