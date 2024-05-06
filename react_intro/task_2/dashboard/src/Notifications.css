@@ -1,0 +1,13 @@
+.notifications {
+    padding: 50px;
+    outline: darkred solid 5px;
+}
+
+li[data-priority="default"] {
+    color: blue;
+  }
+  
+  li[data-priority="urgent"] {
+    color: red;
+  }
+  
