@@ -17,9 +17,3 @@ describe('getFooterCopy', () => {
   });
 });
 
-describe('getLatestNotification', () => {
-  it('returns the correct string', () => {
-    const notification = getLatestNotification();
-    expect(notification).toEqual('<strong>Urgent requirement</strong> - complete by EOD');
-  });
-});

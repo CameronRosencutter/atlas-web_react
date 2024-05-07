@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../assets/HL.ico';
+import './Header.css';
 
 function Header() {
   return (
