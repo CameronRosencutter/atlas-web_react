@@ -1,0 +1,14 @@
+.notifications {
+    padding: 30px;
+    outline: rgb(255, 170, 170) solid 5px;
+}
+
+.notification-default {
+    /* Styles for default notifications */
+  }
+  
+  .notification-urgent {
+    /* Styles for urgent notifications */
+    color: red;
+  }
+  
