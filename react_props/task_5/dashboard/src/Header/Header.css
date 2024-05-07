@@ -1,0 +1,11 @@
+.header {
+    border-bottom: 7px solid rgb(255, 0, 0);
+    display: flex;
+    height: 200px;
+  }
+  
+  .headertitle {
+    margin-top: 70px;
+    color: rgb(255, 0, 0);
+    font-size: 50px;
+  }
