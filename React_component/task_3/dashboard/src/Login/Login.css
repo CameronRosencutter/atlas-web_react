@@ -1,0 +1,17 @@
+form {
+    display: flex;
+  }
+
+.emailbox {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  
+  .passwordbox {
+    margin-right: 20px;
+  }
+  
+  .loginbox {
+    border-bottom: 7px solid red;
+    height: 550px;
+  }
