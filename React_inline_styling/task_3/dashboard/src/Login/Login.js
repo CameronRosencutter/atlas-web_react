@@ -13,13 +13,20 @@ const styles = StyleSheet.create({
   },
   form: {
     display: 'flex',
+    '@media (max-width: 900px)': {
+      // Styles for screens smaller than 900px
+      flexDirection: 'column',
+      padding: '20px',
+    },
   },
   emailbox: {
     marginLeft: '20px',
     marginRight: '20px',
+    marginBottom: '20px',
   },
   passwordbox: {
     marginRight: '20px',
+    marginBottom: '20px',
   },
 });
 
