@@ -1,6 +1,5 @@
 import React from 'react';
 import CourseListRow from './CourseListRow';
-import './CourseList.css';
 import CourseShape from './CourseShape';
 import PropTypes from 'prop-types';
 

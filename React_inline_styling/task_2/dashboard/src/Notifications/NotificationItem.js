@@ -1,43 +1,40 @@
-// NotificationItem.js
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 
-class NotificationItem extends Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
+const styles = StyleSheet.create({
+  default: {
+    color: 'blue',
+  },
+  urgent: {
+    color: 'red',
+  },
+});
 
-  handleClick() {
-    const { id, markAsRead } = this.props;
-    markAsRead(id);
-  }
-
-  render() {
-    const { type, value, html } = this.props;
-
-    return (
-      <li data-testid="notification-item" onClick={this.handleClick} className={type === 'urgent' ? 'urgent' : ''}>
-        {html ? <div dangerouslySetInnerHTML={html}></div> : value}
-      </li>
-    );
-  }
-}
+const NotificationItem = ({ type, value, html, markAsRead, id }) => {
+  return (
+    <li
+      className={css(type === 'urgent' ? styles.urgent : styles.default)}
+      data-notification-type={type}
+      onClick={() => markAsRead(id)}
+      {...(html ? { dangerouslySetInnerHTML: html } : { children: value })}
+    >
+    </li>
+  );
+};
 
 NotificationItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  type: PropTypes.string,
+  type: PropTypes.string.isRequired,
   value: PropTypes.string,
   html: PropTypes.shape({
-    __html: PropTypes.string
+    __html: PropTypes.string,
   }),
   markAsRead: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 NotificationItem.defaultProps = {
   type: 'default',
-  value: '',
-  html: null,
 };
 
 export default NotificationItem;
