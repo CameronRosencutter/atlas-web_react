@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import App from './App';
+import BodySectionWithMarginBottom from './BodySectionWithMarginBottom';
 import { StyleSheetTestUtils } from 'aphrodite';
 
-describe('App Component', () => {
+describe('BodySectionWithMarginBottom Component', () => {
   beforeAll(() => {
     StyleSheetTestUtils.suppressStyleInjection();
   });
@@ -13,7 +13,7 @@ describe('App Component', () => {
   });
 
   it('renders without crashing', () => {
-    const wrapper = shallow(<App />);
+    const wrapper = shallow(<BodySectionWithMarginBottom title="test title">test children</BodySectionWithMarginBottom>);
     expect(wrapper.exists()).toBe(true);
   });
 
