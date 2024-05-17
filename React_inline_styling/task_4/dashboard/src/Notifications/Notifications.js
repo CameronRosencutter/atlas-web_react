@@ -30,6 +30,11 @@ const styles = StyleSheet.create({
   notifications: {
     padding: '30px',
     outline: 'rgb(255, 170, 170) solid 5px',
+    background: 'white',
+    position: 'absolute',
+    top: '30px',
+    right: '0px',
+    zIndex: 1000,
     '@media (max-width: 900px)': {
       position: 'fixed',
       top: 0,
@@ -51,16 +56,23 @@ const styles = StyleSheet.create({
     padding: '25px',
     width: '25%',
     outline: 'rgb(255, 180, 180) solid 3px',
-    float: 'right',
+    position: 'absolute',
+    top: '30px',
+    right: '0px',
+    zIndex: 1000,
     '@media (max-width: 900px)': {
       width: '100%',
       background: 'white',
     },
   },
   menuItem: {
-    float: 'right',
     backgroundColor: '#fff8f8',
     cursor: 'pointer',
+    padding: '10px',
+    position: 'fixed', // Fixed position to stay at the top right
+    top: '10px',
+    right: '10px',
+    zIndex: 1001, // Ensure the menu item is above other elements
     ':hover': {
       animationName: [opacityChange, bounce],
       animationDuration: '1s, 0.5s',
@@ -81,10 +93,11 @@ class Notifications extends Component {
         { id: 2, type: 'urgent', value: 'New resume available' },
         { id: 3, type: 'urgent', html: { __html: 'Urgent requirement - complete by EOD' } },
       ],
+      isHovered: false,
     };
     this.markAsRead = this.markAsRead.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleMenuClick = this.handleMenuClick.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   markAsRead(id) {
@@ -92,48 +105,45 @@ class Notifications extends Component {
     // Logic to mark the notification as read
   }
 
-  handleClose() {
-    console.log('handleClose called');
-    console.log('this.props.setDisplayDrawer:', this.props.setDisplayDrawer);
-    this.props.setDisplayDrawer(false);
+  handleMouseEnter() {
+    this.setState({ isHovered: true });
   }
 
-  handleMenuClick() {
-    this.props.setDisplayDrawer(true);
+  handleMouseLeave() {
+    this.setState({ isHovered: false });
   }
 
   render() {
-    const { notifications } = this.state;
-    const { displayDrawer } = this.props;
+    const { notifications, isHovered } = this.state;
 
     return (
       <div>
         <div
-          className={displayDrawer ? css(styles.hidden) : css(styles.menuItem)}
-          onClick={this.handleMenuClick}
+          className={css(styles.menuItem)}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
         >
           Your notifications
         </div>
-        <div
-          className={displayDrawer ? css(styles.displayDrawer) : ''}
-          onClick={this.handleClose}
-        >
-          <div className={css(styles.notifications)}>
-            <p>Here is the list of notices</p>
-            <ul>
-              {notifications.map(notification => (
-                <NotificationItem
-                  key={notification.id}
-                  type={notification.type}
-                  value={notification.value}
-                  html={notification.html}
-                  markAsRead={() => this.markAsRead(notification.id)} // Correctly binding the markAsRead function
-                  className={notification.type === 'urgent' ? css(styles.notificationUrgent) : css(styles.notificationDefault)}
-                />
-              ))}
-            </ul>
+        {isHovered && (
+          <div className={css(styles.displayDrawer)}>
+            <div className={css(styles.notifications)}>
+              <p>Here is the list of notices</p>
+              <ul>
+                {notifications.map(notification => (
+                  <NotificationItem
+                    key={notification.id}
+                    type={notification.type}
+                    value={notification.value}
+                    html={notification.html}
+                    markAsRead={() => this.markAsRead(notification.id)} // Correctly binding the markAsRead function
+                    className={notification.type === 'urgent' ? css(styles.notificationUrgent) : css(styles.notificationDefault)}
+                  />
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }

@@ -64,10 +64,10 @@ class App extends Component {
     super(props);
     this.state = {
       isLoggedIn: this.props.isLoggedIn,
-      displayDrawer: false,
+      displayDrawer: false
     };
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.setDisplayDrawer = this.setDisplayDrawer.bind(this);
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
   componentDidMount() {
@@ -89,8 +89,8 @@ class App extends Component {
     }
   }
 
-  setDisplayDrawer(displayDrawer) {
-    this.setState({ displayDrawer });
+  toggleDrawer() {
+    this.setState(prevState => ({ displayDrawer: !prevState.displayDrawer }));
   }
 
   render() {
@@ -99,22 +99,12 @@ class App extends Component {
         <div className="root-notifications"></div>
         <div className="App-header">
           <Header />
-          {this.state.displayDrawer && (
-            <Notifications
-              listNotifications={listNotifications}
-              displayDrawer={this.state.displayDrawer}
-              setDisplayDrawer={this.setDisplayDrawer}
-            />
-          )}
+          {this.state.displayDrawer && <Notifications listNotifications={listNotifications} />}
         </div>
         <div className={`App-body ${css(styles.body)}`}>
           <main>
             <BodySectionWithMarginBottom>
-              {this.state.isLoggedIn ? (
-                <CourseList listCourses={listCourses} />
-              ) : (
-                <Login />
-              )}
+              {this.state.isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
             </BodySectionWithMarginBottom>
             <BodySection>
               <h2>News from the School</h2>
