@@ -87,17 +87,7 @@ const styles = StyleSheet.create({
 class Notifications extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      notifications: [
-        { id: 1, type: 'default', value: 'New course available' },
-        { id: 2, type: 'urgent', value: 'New resume available' },
-        { id: 3, type: 'urgent', html: { __html: 'Urgent requirement - complete by EOD' } },
-      ],
-      isHovered: false,
-    };
     this.markAsRead = this.markAsRead.bind(this);
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   markAsRead(id) {
@@ -105,38 +95,30 @@ class Notifications extends Component {
     // Logic to mark the notification as read
   }
 
-  handleMouseEnter() {
-    this.setState({ isHovered: true });
-  }
-
-  handleMouseLeave() {
-    this.setState({ isHovered: false });
-  }
-
   render() {
-    const { notifications, isHovered } = this.state;
+    const { listNotifications, displayDrawer, handleDisplayDrawer, handleHideDrawer } = this.props;
 
     return (
       <div>
         <div
           className={css(styles.menuItem)}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
+          onClick={handleDisplayDrawer}
         >
           Your notifications
         </div>
-        {isHovered && (
+        {displayDrawer && (
           <div className={css(styles.displayDrawer)}>
             <div className={css(styles.notifications)}>
+              <button onClick={handleHideDrawer}>Close</button>
               <p>Here is the list of notices</p>
               <ul>
-                {notifications.map(notification => (
+                {listNotifications.map(notification => (
                   <NotificationItem
                     key={notification.id}
                     type={notification.type}
                     value={notification.value}
                     html={notification.html}
-                    markAsRead={() => this.markAsRead(notification.id)} // Correctly binding the markAsRead function
+                    markAsRead={() => this.markAsRead(notification.id)}
                     className={notification.type === 'urgent' ? css(styles.notificationUrgent) : css(styles.notificationDefault)}
                   />
                 ))}
@@ -150,11 +132,21 @@ class Notifications extends Component {
 }
 
 Notifications.propTypes = {
+  listNotifications: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    html: PropTypes.shape({
+      __html: PropTypes.string,
+    }),
+  })),
   displayDrawer: PropTypes.bool,
-  setDisplayDrawer: PropTypes.func.isRequired,
+  handleDisplayDrawer: PropTypes.func.isRequired,
+  handleHideDrawer: PropTypes.func.isRequired,
 };
 
 Notifications.defaultProps = {
+  listNotifications: [],
   displayDrawer: false,
 };
 

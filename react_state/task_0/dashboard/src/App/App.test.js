@@ -1,21 +1,22 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import App from './App';
-import { StyleSheetTestUtils } from 'aphrodite';
 
-describe('App Component', () => {
-  beforeAll(() => {
-    StyleSheetTestUtils.suppressStyleInjection();
-  });
-
-  afterAll(() => {
-    StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
-  });
-
-  it('renders without crashing', () => {
+describe('App component', () => {
+  it('should have displayDrawer set to false by default', () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.exists()).toBe(true);
+    expect(wrapper.state().displayDrawer).toBe(false);
   });
 
-  // Add more tests as needed
+  it('handleDisplayDrawer should set displayDrawer to true', () => {
+    const wrapper = shallow(<App />);
+    wrapper.instance().handleDisplayDrawer();
+    expect(wrapper.state().displayDrawer).toBe(true);
+  });
+
+  it('handleHideDrawer should set displayDrawer to false', () => {
+    const wrapper = shallow(<App />);
+    wrapper.instance().handleHideDrawer();
+    expect(wrapper.state().displayDrawer).toBe(false);
+  });
 });
