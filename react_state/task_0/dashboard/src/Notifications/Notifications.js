@@ -102,7 +102,7 @@ class Notifications extends Component {
       <div>
         <div
           className={css(styles.menuItem)}
-          onClick={handleDisplayDrawer}
+          onClick={handleDisplayDrawer} // Ensure this calls handleDisplayDrawer
         >
           Your notifications
         </div>
@@ -141,13 +141,15 @@ Notifications.propTypes = {
     }),
   })),
   displayDrawer: PropTypes.bool,
-  handleDisplayDrawer: PropTypes.func.isRequired,
-  handleHideDrawer: PropTypes.func.isRequired,
+  handleDisplayDrawer: PropTypes.func.isRequired, // Ensure handleDisplayDrawer is required
+  handleHideDrawer: PropTypes.func.isRequired, // Ensure handleHideDrawer is required
 };
 
 Notifications.defaultProps = {
   listNotifications: [],
   displayDrawer: false,
+  handleDisplayDrawer: () => {}, // Default to empty function
+  handleHideDrawer: () => {}, // Default to empty function
 };
 
 export default Notifications;

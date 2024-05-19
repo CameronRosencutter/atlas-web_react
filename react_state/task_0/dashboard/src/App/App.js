@@ -99,6 +99,8 @@ class App extends Component {
   }
 
   render() {
+    const { displayDrawer } = this.state; // Ensure displayDrawer is extracted from state
+
     return (
       <>
         <div className="root-notifications"></div>
@@ -106,7 +108,7 @@ class App extends Component {
           <Header />
           <Notifications
             listNotifications={listNotifications}
-            displayDrawer={this.state.displayDrawer}
+            displayDrawer={displayDrawer} // Pass displayDrawer to Notifications component
             handleDisplayDrawer={this.handleDisplayDrawer}
             handleHideDrawer={this.handleHideDrawer}
           />
