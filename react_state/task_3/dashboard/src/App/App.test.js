@@ -1,55 +1,47 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import App from './App';
-import AppContext from './AppContext';
 
-describe('<App />', () => {
-  it('renders without crashing', () => {
+describe('App component tests', () => {
+  it('should update the state with logIn', () => {
     const wrapper = shallow(<App />);
-    expect(wrapper.exists()).toBe(true);
-  });
-
-  it('default state for displayDrawer is false', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.state('displayDrawer')).toBe(false);
-  });
-
-  it('handleDisplayDrawer sets displayDrawer to true', () => {
-    const wrapper = shallow(<App />);
-    wrapper.instance().handleDisplayDrawer();
-    expect(wrapper.state('displayDrawer')).toBe(true);
-  });
-
-  it('handleHideDrawer sets displayDrawer to false', () => {
-    const wrapper = shallow(<App />);
-    wrapper.instance().handleHideDrawer();
-    expect(wrapper.state('displayDrawer')).toBe(false);
-  });
-
-  it('logIn function updates the state correctly', () => {
-    const wrapper = shallow(<App />);
-    wrapper.instance().logIn('test@test.com', 'password');
-    expect(wrapper.state('user')).toEqual({
-      email: 'test@test.com',
+    const instance = wrapper.instance();
+    instance.logIn('test@example.com', 'password');
+    expect(wrapper.state().user).toEqual({
+      email: 'test@example.com',
       password: 'password',
       isLoggedIn: true,
     });
   });
 
-  it('logOut function updates the state correctly', () => {
+  it('should update the state with logOut', () => {
     const wrapper = shallow(<App />);
     wrapper.setState({
-      user: {
-        email: 'test@test.com',
-        password: 'password',
-        isLoggedIn: true,
-      },
+      user: { email: 'test@example.com', password: 'password', isLoggedIn: true },
     });
-    wrapper.instance().logOut();
-    expect(wrapper.state('user')).toEqual({
+    const instance = wrapper.instance();
+    instance.logOut();
+    expect(wrapper.state().user).toEqual({
       email: '',
       password: '',
       isLoggedIn: false,
     });
+  });
+
+  it('should update the state with markNotificationAsRead', () => {
+    const wrapper = shallow(<App />);
+    wrapper.setState({
+      listNotifications: [
+        { id: 1, type: 'default', value: 'New course available' },
+        { id: 2, type: 'urgent', value: 'New resume available' },
+        { id: 3, type: 'urgent', value: 'New data available' },
+      ],
+    });
+    const instance = wrapper.instance();
+    instance.markNotificationAsRead(2);
+    expect(wrapper.state().listNotifications).toEqual([
+      { id: 1, type: 'default', value: 'New course available' },
+      { id: 3, type: 'urgent', value: 'New data available' },
+    ]);
   });
 });

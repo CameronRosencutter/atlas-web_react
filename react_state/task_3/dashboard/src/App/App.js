@@ -39,11 +39,17 @@ class App extends Component {
         password: '',
         isLoggedIn: false,
       },
+      listNotifications: [
+        { id: 1, type: 'default', value: 'New course available' },
+        { id: 2, type: 'urgent', value: 'New resume available' },
+        { id: 3, type: 'urgent', value: 'New data available' },
+      ],
     };
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
+    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
 
   handleDisplayDrawer() {
@@ -74,8 +80,16 @@ class App extends Component {
     });
   }
 
+  markNotificationAsRead(id) {
+    this.setState((prevState) => ({
+      listNotifications: prevState.listNotifications.filter(
+        (notification) => notification.id !== id
+      ),
+    }));
+  }
+
   render() {
-    const { displayDrawer, user } = this.state;
+    const { displayDrawer, user, listNotifications } = this.state;
     const value = {
       user,
       logOut: this.logOut,
@@ -86,7 +100,12 @@ class App extends Component {
         <div className="root-notifications"></div>
         <div className="App-header">
           <Header />
-          {displayDrawer && <Notifications />}
+          {displayDrawer && (
+            <Notifications
+              listNotifications={listNotifications}
+              markNotificationAsRead={this.markNotificationAsRead}
+            />
+          )}
         </div>
         <div className={`App-body ${css(styles.body)}`}>
           <main>
