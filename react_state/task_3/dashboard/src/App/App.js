@@ -29,6 +29,42 @@ const styles = StyleSheet.create({
   },
 });
 
+const listCourses = [
+  {
+    id: 1,
+    name: "ES6",
+    credit: 60,
+  },
+  {
+    id: 2,
+    name: "Webpack",
+    credit: 20,
+  },
+  {
+    id: 3,
+    name: "React",
+    credit: 40,
+  },
+];
+
+const defaultListNotifications = [
+  {
+    id: 1,
+    type: "default",
+    value: "Default Notification",
+  },
+  {
+    id: 2,
+    type: "urgent",
+    value: "Urgent Notification",
+  },
+  {
+    id: 3,
+    type: "urgent",
+    html: { __html: "<b>Html</b> notification" },
+  },
+];
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -39,11 +75,7 @@ class App extends Component {
         password: '',
         isLoggedIn: false,
       },
-      listNotifications: [
-        { id: 1, type: 'default', value: 'New course available' },
-        { id: 2, type: 'urgent', value: 'New resume available' },
-        { id: 3, type: 'urgent', value: 'New data available' },
-      ],
+      listNotifications: defaultListNotifications,
     };
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
@@ -110,7 +142,7 @@ class App extends Component {
         <div className={`App-body ${css(styles.body)}`}>
           <main>
             <BodySectionWithMarginBottom>
-              {user.isLoggedIn ? <CourseList /> : <Login logIn={this.logIn} />}
+              {user.isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login logIn={this.logIn} />}
             </BodySectionWithMarginBottom>
             <BodySection className="news">
               <h2>News from the School</h2>
