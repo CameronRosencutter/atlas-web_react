@@ -27,6 +27,15 @@ const styles = StyleSheet.create({
     height: '200px',
     padding: '30px',
   },
+  notificationWrapper: {
+    position: 'relative',
+  },
+  notifications: {
+    position: 'absolute',
+    top: '30px',
+    right: '10px',
+    zIndex: 1,
+  },
 });
 
 const listCourses = [
@@ -132,14 +141,18 @@ class App extends Component {
         <div className="root-notifications"></div>
         <div className="App-header">
           <Header />
-          {displayDrawer && (
-            <Notifications
-              listNotifications={listNotifications}
-              markNotificationAsRead={this.markNotificationAsRead}
-            />
-          )}
         </div>
         <div className={`App-body ${css(styles.body)}`}>
+          <div className={css(styles.notificationWrapper)}
+               onMouseEnter={this.handleDisplayDrawer}
+               onMouseLeave={this.handleHideDrawer}>
+            <Notifications
+              displayDrawer={displayDrawer}
+              listNotifications={listNotifications}
+              markNotificationAsRead={this.markNotificationAsRead}
+              handleHideDrawer={this.handleHideDrawer}
+            />
+          </div>
           <main>
             <BodySectionWithMarginBottom>
               {user.isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login logIn={this.logIn} />}
