@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 
 const styles = StyleSheet.create({
@@ -34,7 +35,6 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false,
       email: '',
       password: '',
       enableSubmit: false,
@@ -55,7 +55,8 @@ class Login extends Component {
 
   handleLoginSubmit(event) {
     event.preventDefault();
-    this.setState({ isLoggedIn: true });
+    const { email, password } = this.state;
+    this.props.logIn(email, password);
   }
 
   toggleSubmitButton() {
@@ -103,5 +104,9 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  logIn: PropTypes.func.isRequired,
+};
 
 export default Login;

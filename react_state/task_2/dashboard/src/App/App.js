@@ -17,10 +17,15 @@ const styles = StyleSheet.create({
   footer: {
     borderTop: '3px solid #E11D3F',
     padding: '10px',
+    background: 'white',
     textAlign: 'center',
     position: 'fixed',
     bottom: '0',
     width: '100%',
+  },
+  news: {
+    height: '200px',
+    padding: '30px',
   },
 });
 
@@ -88,7 +93,7 @@ class App extends Component {
             <BodySectionWithMarginBottom>
               {user.isLoggedIn ? <CourseList /> : <Login logIn={this.logIn} />}
             </BodySectionWithMarginBottom>
-            <BodySection>
+            <BodySection className="news">
               <h2>News from the School</h2>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo provident possimus numquam autem.</p>
             </BodySection>
