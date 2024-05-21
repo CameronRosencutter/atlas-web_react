@@ -1,10 +1,8 @@
 // src/schema/notifications.test.js
-import { normalizeNotifications } from './notifications';
+import { normalizeNotifications, getAllNotificationsByUser, normalizedData } from './notifications';
 import * as notificationsData from '../../notifications.json';
 
 describe('normalizeNotifications', () => {
-  const normalizedData = normalizeNotifications(notificationsData.default);
-
   test('should return correct result array', () => {
     const expectedResultArray = [
       "5debd76480edafc8af244228",
@@ -57,5 +55,26 @@ describe('normalizeNotifications', () => {
     };
 
     expect(normalizedData.entities.notifications['5debd7642e815cd350407777']).toEqual(expectedNotification);
+  });
+});
+
+describe('getAllNotificationsByUser', () => {
+  test('should return correct notifications for user', () => {
+    const expectedNotifications = [
+      {
+        guid: "2d8e40be-1c78-4de0-afc9-fcc147afd4d2",
+        isRead: true,
+        type: "urgent",
+        value: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt."
+      },
+      {
+        guid: "280913fe-38dd-4abd-8ab6-acdb4105f922",
+        isRead: false,
+        type: "urgent",
+        value: "Non diam phasellus vestibulum lorem sed risus ultricies. Tellus mauris a diam maecenas sed"
+      }
+    ];
+
+    expect(getAllNotificationsByUser('5debd764a7c57c7839d722e9')).toEqual(expectedNotifications);
   });
 });
