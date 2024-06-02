@@ -1,17 +1,17 @@
-import { MARK_AS_READ, SET_TYPE_FILTER } from './notificationActionTypes';
-import { bindActionCreators } from 'redux';
+// src/actions/notificationActionCreators.js
+import { FETCH_NOTIFICATIONS_SUCCESS, MARK_AS_READ, SET_TYPE_FILTER } from './notificationActionTypes';
 
+export const fetchNotificationsSuccess = data => ({
+  type: FETCH_NOTIFICATIONS_SUCCESS,
+  data
+});
 
-export const markAsRead = (index) => ({
+export const markAsRead = index => ({
   type: MARK_AS_READ,
-  index,
+  index
 });
 
-export const setNotificationFilter = (filter) => ({
+export const setNotificationFilter = filter => ({
   type: SET_TYPE_FILTER,
-  filter,
+  filter
 });
-
-
-export const boundMarkAsRead = (dispatch) => bindActionCreators(markAsRead, dispatch);
-export const boundSetNotificationFilter = (dispatch) => bindActionCreators(setNotificationFilter, dispatch);
