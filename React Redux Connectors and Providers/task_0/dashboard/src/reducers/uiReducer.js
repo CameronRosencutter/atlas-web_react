@@ -1,50 +1,20 @@
-import { 
-    DISPLAY_NOTIFICATION_DRAWER, 
-    HIDE_NOTIFICATION_DRAWER, 
-    LOGIN_SUCCESS, 
-    LOGIN_FAILURE, 
-    LOGOUT 
-  } from '../actions/uiActionTypes';
-  
-  // Initial state
-  const initialState = {
-    isNotificationDrawerVisible: false,
-    isUserLoggedIn: false,
-    user: {}
-  };
-  
-  // Reducer function
-  const uiReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case DISPLAY_NOTIFICATION_DRAWER:
-        return {
-          ...state,
-          isNotificationDrawerVisible: true
-        };
-      case HIDE_NOTIFICATION_DRAWER:
-        return {
-          ...state,
-          isNotificationDrawerVisible: false
-        };
-      case LOGIN_SUCCESS:
-        return {
-          ...state,
-          isUserLoggedIn: true
-        };
-      case LOGIN_FAILURE:
-        return {
-          ...state,
-          isUserLoggedIn: false
-        };
-      case LOGOUT:
-        return {
-          ...state,
-          isUserLoggedIn: false
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default uiReducer;
-  
+import { fromJS, Map } from 'immutable';
+import { FETCH_COURSE_SUCCESS, SELECT_COURSE, UNSELECT_COURSE } from '../actions/courseActionTypes';
+
+const initialState = Map({
+  isUserLoggedIn: false,
+  // other initial state properties
+});
+
+export default function uiReducer(state = initialState, action) {
+  switch (action.type) {
+    case FETCH_COURSE_SUCCESS:
+      return state.set('courses', fromJS(action.data));
+    case SELECT_COURSE:
+      return state.setIn(['courses', action.index, 'isSelected'], true);
+    case UNSELECT_COURSE:
+      return state.setIn(['courses', action.index, 'isSelected'], false);
+    default:
+      return state;
+  }
+}

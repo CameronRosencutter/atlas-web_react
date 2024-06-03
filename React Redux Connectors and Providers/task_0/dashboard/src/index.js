@@ -1,11 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom'; // Import from react-dom instead of react-dom/client
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import uiReducer from './reducers/uiReducer'; // Adjust the import path according to your project structure
 import App from './App/App';
 
-// Root for the main app
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+// Create the Redux store
+const store = createStore(uiReducer);
+
+ReactDOM.render(
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+  </Provider>,
+  document.getElementById('root')
 );

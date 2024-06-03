@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
+import { connect } from 'react-redux';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import Notifications from '../Notifications/Notifications';
@@ -79,11 +80,6 @@ class App extends Component {
     super(props);
     this.state = {
       displayDrawer: false,
-      user: {
-        email: '',
-        password: '',
-        isLoggedIn: false,
-      },
       listNotifications: defaultListNotifications,
     };
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
@@ -130,9 +126,14 @@ class App extends Component {
   }
 
   render() {
-    const { displayDrawer, user, listNotifications } = this.state;
+    const { displayDrawer, listNotifications } = this.state;
+    const { isLoggedIn } = this.props;
     const value = {
-      user,
+      user: {
+        email: '',
+        password: '',
+        isLoggedIn: isLoggedIn,
+      },
       logOut: this.logOut,
     };
 
@@ -155,7 +156,7 @@ class App extends Component {
           </div>
           <main>
             <BodySectionWithMarginBottom>
-              {user.isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login logIn={this.logIn} />}
+              {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login logIn={this.logIn} />}
             </BodySectionWithMarginBottom>
             <BodySection className="news">
               <h2>News from the School</h2>
@@ -172,6 +173,7 @@ class App extends Component {
 }
 
 App.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
   logOut: PropTypes.func,
 };
 
@@ -179,4 +181,8 @@ App.defaultProps = {
   logOut: () => {},
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.get('isUserLoggedIn'),
+});
+
+export default connect(mapStateToProps)(App);
