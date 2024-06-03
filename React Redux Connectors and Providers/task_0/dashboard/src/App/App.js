@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
+import { fromJS } from 'immutable';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import Notifications from '../Notifications/Notifications';
@@ -181,7 +182,7 @@ App.defaultProps = {
   logOut: () => {},
 };
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   isLoggedIn: state.get('isUserLoggedIn'),
 });
 

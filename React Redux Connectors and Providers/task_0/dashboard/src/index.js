@@ -2,10 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import uiReducer from './reducers/uiReducer'; // Adjust the import path according to your project structure
 import App from './App/App';
+import uiReducer from './reducers/uiReducer';
 
-// Create the Redux store
 const store = createStore(uiReducer);
 
 ReactDOM.render(
