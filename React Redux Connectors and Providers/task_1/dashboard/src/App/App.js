@@ -11,6 +11,7 @@ import Footer from '../Footer/Footer';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
 import AppContext from './AppContext';
+import { displayNotificationDrawer, hideNotificationDrawer } from '../actions/uiActionCreators';
 
 const styles = StyleSheet.create({
   body: {
@@ -82,19 +83,9 @@ class App extends Component {
     this.state = {
       listNotifications: defaultListNotifications,
     };
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.logOut = this.logOut.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
-  }
-
-  handleDisplayDrawer() {
-    // You can dispatch an action to update the Redux state here
-  }
-
-  handleHideDrawer() {
-    // You can dispatch an action to update the Redux state here
   }
 
   logIn(email, password) {
@@ -127,7 +118,7 @@ class App extends Component {
 
   render() {
     const { listNotifications } = this.state;
-    const { isLoggedIn, displayDrawer } = this.props;
+    const { isLoggedIn, displayDrawer, displayNotificationDrawer, hideNotificationDrawer } = this.props;
     const value = {
       user: {
         email: '',
@@ -145,13 +136,13 @@ class App extends Component {
         </div>
         <div className={`App-body ${css(styles.body)}`}>
           <div className={css(styles.notificationWrapper)}
-               onMouseEnter={this.handleDisplayDrawer}
-               onMouseLeave={this.handleHideDrawer}>
+               onMouseEnter={displayNotificationDrawer}
+               onMouseLeave={hideNotificationDrawer}>
             <Notifications
               displayDrawer={displayDrawer}
               listNotifications={listNotifications}
               markNotificationAsRead={this.markNotificationAsRead}
-              handleHideDrawer={this.handleHideDrawer}
+              handleHideDrawer={hideNotificationDrawer}
             />
           </div>
           <main>
@@ -175,6 +166,8 @@ class App extends Component {
 App.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   displayDrawer: PropTypes.bool.isRequired,
+  displayNotificationDrawer: PropTypes.func.isRequired,
+  hideNotificationDrawer: PropTypes.func.isRequired,
   logOut: PropTypes.func,
 };
 
@@ -187,4 +180,9 @@ export const mapStateToProps = (state) => ({
   displayDrawer: state.get('isNotificationDrawerVisible'),
 });
 
-export default connect(mapStateToProps)(App);
+export const mapDispatchToProps = {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
