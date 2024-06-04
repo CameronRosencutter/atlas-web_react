@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
 import { connect } from 'react-redux';
-import { fromJS } from 'immutable';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import Notifications from '../Notifications/Notifications';
@@ -81,6 +80,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {
+        email: '',
+        password: '',
+        isLoggedIn: false,
+      },
       listNotifications: defaultListNotifications,
     };
     this.logIn = this.logIn.bind(this);
