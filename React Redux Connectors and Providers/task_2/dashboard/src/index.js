@@ -1,18 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { fromJS } from 'immutable';
-import rootReducer from './reducers'; // Assuming your rootReducer is in the reducers folder
+import { createStore } from 'redux';
 import App from './App/App';
+import uiReducer from './reducers/uiReducer';
 
-// Create the Redux store and apply the thunk middleware
-const store = createStore(
-  rootReducer,
-  fromJS({}),  // Initial state
-  applyMiddleware(thunk)
-);
+const store = createStore(uiReducer);
 
 ReactDOM.render(
   <Provider store={store}>
