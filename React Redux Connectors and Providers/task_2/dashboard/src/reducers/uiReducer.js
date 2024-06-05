@@ -1,20 +1,28 @@
-import { fromJS, Map } from 'immutable';
-import { FETCH_COURSE_SUCCESS, SELECT_COURSE, UNSELECT_COURSE } from '../actions/courseActionTypes';
+import { fromJS } from 'immutable';
+import { DISPLAY_NOTIFICATION_DRAWER, HIDE_NOTIFICATION_DRAWER, LOGIN, LOGOUT } from '../actions/uiActionTypes';
 
-const initialState = Map({
-  isUserLoggedIn: false,
-  // other initial state properties
+const initialState = fromJS({
+  isNotificationDrawerVisible: false,
+  user: null,
 });
 
-export default function uiReducer(state = initialState, action) {
+const uiReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_COURSE_SUCCESS:
-      return state.set('courses', fromJS(action.data));
-    case SELECT_COURSE:
-      return state.setIn(['courses', action.index, 'isSelected'], true);
-    case UNSELECT_COURSE:
-      return state.setIn(['courses', action.index, 'isSelected'], false);
+    case DISPLAY_NOTIFICATION_DRAWER:
+      return state.set('isNotificationDrawerVisible', true);
+
+    case HIDE_NOTIFICATION_DRAWER:
+      return state.set('isNotificationDrawerVisible', false);
+
+    case LOGIN:
+      return state.set('user', action.user);
+
+    case LOGOUT:
+      return state.set('user', null);
+
     default:
       return state;
   }
-}
+};
+
+export default uiReducer;

@@ -1,21 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { fromJS } from 'immutable';
 import { App, mapStateToProps } from './App';
 import Notifications from '../Notifications/Notifications';
 import Login from '../Login/Login';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import CourseList from '../CourseList/CourseList';
-import AppContext from './AppContext';
+import { fromJS } from 'immutable';
 
 // Mock data
-const listCourses = [
-  { id: 1, name: "ES6", credit: 60 },
-  { id: 2, name: "Webpack", credit: 20 },
-  { id: 3, name: "React", credit: 40 },
-];
-
 const listNotifications = [
   { id: 1, type: "default", value: "Default Notification" },
   { id: 2, type: "urgent", value: "Urgent Notification" },
