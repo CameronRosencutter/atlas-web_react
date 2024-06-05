@@ -1,23 +1,29 @@
-// src/reducers/notificationReducer.js
-import { Map } from 'immutable';
-import { FETCH_NOTIFICATIONS_SUCCESS, MARK_AS_READ, SET_TYPE_FILTER, NotificationTypeFilters } from '../actions/notificationActionTypes';
-import { notificationsNormalizer } from '../schema/notifications';
+import { fromJS } from 'immutable';
+import {
+  SET_LOADING_STATE,
+  FETCH_NOTIFICATIONS_SUCCESS
+} from '../actions/notificationActionTypes';
 
-const initialState = Map({
-  notifications: Map(),
-  filter: NotificationTypeFilters.DEFAULT
+// Initial state
+const initialState = fromJS({
+  notifications: [],
+  loading: false
 });
 
-export const notificationReducer = (state = initialState, action) => {
+const notificationReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SET_LOADING_STATE:
+      return state.set('loading', action.payload);
+
     case FETCH_NOTIFICATIONS_SUCCESS:
-      const normalizedData = notificationsNormalizer(action.data);
-      return state.mergeIn(['notifications'], fromJS(normalizedData.entities.notifications));
-    case MARK_AS_READ:
-      return state.setIn(['notifications', action.index, 'isRead'], true);
-    case SET_TYPE_FILTER:
-      return state.set('filter', action.filter);
+      // Merge the fetched notifications into the current state
+      return state.mergeDeep({
+        notifications: action.payload
+      });
+
     default:
       return state;
   }
 };
+
+export default notificationReducer;
