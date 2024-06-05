@@ -14,7 +14,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-import { composeWithDevTools } from 'redux-devtools-extension';
 
-const composeEnhancers = composeWithDevTools({
-}) || window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;

@@ -61,8 +61,12 @@ describe('<App />', () => {
 describe('Redux tests', () => {
   it('should return the right object when calling mapStateToProps', () => {
     const state = fromJS({
-      isUserLoggedIn: true,
-      isNotificationDrawerVisible: false,
+      courses: {},
+      notifications: {},
+      ui: {
+        isUserLoggedIn: true,
+        isNotificationDrawerVisible: false,
+      }
     });
     const expectedProps = {
       isLoggedIn: true,
